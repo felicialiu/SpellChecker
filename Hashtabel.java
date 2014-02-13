@@ -4,9 +4,6 @@ import java.long.*;
 
 
 public class Hashtabel {
-	///// weet niet wat dit doet volgens mij is het niet nodig
-	private BufferedReader wordLibrary;
-
 	// Hashtabel actual array // liever linked-list gebruiken
 	String[][] hashArray;
 
