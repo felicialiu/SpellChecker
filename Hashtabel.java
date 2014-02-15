@@ -1,34 +1,60 @@
 import java.util.*;
 import java.io.*;
-import java.long.*;
-
+// import java.long.*;
 
 public class Hashtabel {
+	public static void main(String[] args) {
+
+	}
 	// Hashtabel actual array // liever linked-list gebruiken
-	Linkedlisthashentry[][] hashArray;
+	Linkedlist[][] hashArray;
 
 	// Load factor of the hash table, automatically on 0.75 since it's a
 	// good load_factor
-	private float load_factor = 0.75;
+	private double load_factor = 0.75;
 
 	// intitial size of the hash table
 	private int hash_size;
 
 	// Constructor that creates the hash table object
-	public Hashtabel<K,Y>(int size) {
+	public Hashtabel(int size) {
 		hash_size = size;
-		hashArray = new Linkedlisthashentry(K key, V value);
+		hashArray = new Linkedlist[hash_size][1]; //new Linkedlist(key, value);
 	}
 
+	Compressable func = new Division();
+
 	// Maps the specified key to the specified value in the hashtable
-	private void put(K key, V value) {
-		int index = calcIndex(key);
-		//hashArray
+	public void put(String key, String value) {
+		int index = func.calcIndex(key);
+		Linkedlist currentNode = hashArray[index];
+		if (currentNode == null) {
+			currentNode = new Linkedlist(key, value);
+		} else {
+			while(currentNode != null) {
+				currentNode = currentNode.getNext();
+			}
+			currentNode.setNext(new Linkedlist(key, value));
+		}
 	}
 
 	// Returns the value to which the specified key is mapped, or null
 	// if the map contains no mapping for the key.
-	private V get(K key) {
+	public String get(String key) {
+		int index = func.calcIndex(key);
+		Linkedlist currentNode = hashArray[index];
+		if (currentNode.getKey().equals(key)) {
+			currentNode.getValue();
+		} else {
+			while(!currentNode.getKey().equals(key)) {
+				currentNode = currentNode.getNext();
+			}
+			currentNode.getValue();
+		}
 		return null;
+	}
+
+	public int size() {
+		return hashArray.length;
 	}
 }

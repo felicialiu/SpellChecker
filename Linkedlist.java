@@ -1,19 +1,38 @@
+import java.util.*;
+import java.lang.*;
+
 public class Linkedlist
 {
-	public static void main() {
-		Linkedlist
+	public static void main(String[] args) {
+		/*
+		Linkedlist test1 = new Linkedlist("Word", "a");
+		Linkedlist test2 = new Linkedlist("Woord", "a");
+		Linkedlist test3 = new Linkedlist("Node", "a");
+		test1.setNext(test2);
+		test2.setNext(test3);
+		System.out.println("Printing the key of test 1!");
+		System.out.println(test1.getKey());
+		System.out.println("Printing the next value of test 1!");
+		System.out.println(test1.getNext().getKey());
+		*/
+		/*
+		Linkedlist[] testarray = new Linkedlist[5];
+		for(int i = 0; i < testarray.length; i++) {
+			System.out.println(testarray[i]);
+		}
+		*/
 	}
-	//Linked list that will function as entry for hashtable
+	// Linked list that will function as entry for hashtable
 	private Linkedlist next;
 
-	//The key that will be passed to the constructor
-	private int key;
+	// The key of the hashtable that will be passed to the constructor
+	private String key;
 
-	//The value that will be passed to the constructor
-	private int value;
+	// The value corresponding to the key that will be passed to the constructor
+	private String value;
 
-	//The constructor for creating the linked list
-	public Linkedlist(int key, int value)
+	// The constructor for creating the linked list
+	public Linkedlist(String key, String value)
 	{
 		this.key = key;
 		this.value = value;
@@ -21,19 +40,19 @@ public class Linkedlist
 	}
 
 	//Returns the value 
-	public int getValue()
+	public String getValue()
 	{
 		return value;
 	}
 
 	//Sets the value 
-	public void setValue(int value)
+	public void setValue(String value)
 	{
 		this.value = value;
 	}
 
 	//returns the key
-	public int getKey()
+	public String getKey()
 	{
 		return key;
 	}
@@ -49,6 +68,4 @@ public class Linkedlist
 	{
 		this.next = next;
 	}
-
-
 }
