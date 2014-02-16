@@ -18,8 +18,9 @@ class SpellChecker {
         wordfile = args[0];
         textfile = args[1];
         hash_size = Integer.parseInt(args[2]);
+        Compressable function = new Division(hash_size);
         System.out.printf("Selected table size: %d\n", hash_size);
-        table = new Hashtabel(hash_size ); // table = new Hashtable<String, String>(hash_size);
+        table = new Hashtabel(hash_size, function); // table = new Hashtable<String, String>(hash_size);
        
         /* Read wordfile, and insert every word into the hash table. */
         try {
