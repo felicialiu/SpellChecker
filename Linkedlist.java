@@ -23,13 +23,13 @@ public class Linkedlist
 		*/
 	}
 	// Linked list that will function as entry for hashtable
-	private Linkedlist next;
+	private Linkedlist next = null;
 
 	// The key of the hashtable that will be passed to the constructor
-	private String key;
+	private String key = null;
 
 	// The value corresponding to the key that will be passed to the constructor
-	private String value;
+	private String value = null;
 
 	// The constructor for creating the linked list
 	public Linkedlist(String key, String value)
@@ -54,7 +54,13 @@ public class Linkedlist
 	//returns the key
 	public String getKey()
 	{
-		return key;
+		System.out.println("Entered getKey()");
+		if(key == null) {
+			System.out.println("No value has been found");
+			return null;
+		} else {
+			return this.key;
+		}
 	}
 
 	//returns the next element

@@ -5,7 +5,20 @@ import java.io.*;
 
 public class Hashtabel {
 	public static void main(String[] args) {
-
+		Compressable func = new Division(100);
+		Hashtabel test = new Hashtabel(100, func);
+		System.out.println(test.size());
+		String key = "hallo";
+		System.out.println(func.calcIndex(key));
+		test.put(key, "a");
+		for(int i = 0; i < test.size(); i++) {
+			if(test.getHashtabel()[i] == null) {
+				System.out.println("Empty! In index " + i);
+			} else {
+				System.out.print("Index " + i + " contains key " + test.getHashtabel()[i].getKey());
+			}
+		}
+		System.out.println("done");
 	}
 	// Hashtabel actual array // liever linked-list gebruiken
 	Linkedlist[] hashArray;
@@ -26,19 +39,26 @@ public class Hashtabel {
 		function = hashfunc;
 	}
 
+	public Linkedlist[] getHashtabel() {
+		return hashArray;
+	}
 
 	// Maps the specified key to the specified value in the hashtable
 	public void put(String key, String value) {
-		// System.out.println("Entering put function Hashtabel");
+		System.out.println("Entering put function Hashtabel");
 		int index = function.calcIndex(key);// function(key);// .calcIndex(key);
+		System.out.println("Put at index " + index);
 		Linkedlist currentNode = hashArray[index];
+		// System.out.println("Before entering if loop " + hashArray[index].getKey());
 		if (currentNode == null) {
-			currentNode = new Linkedlist(key, value);
+			hashArray[index] = new Linkedlist(key, value);
+			System.out.println("If loop value " + hashArray[index].getKey());
 		} else {
 			while(currentNode != null) {
 				currentNode = currentNode.getNext();
 			}
-			currentNode.setNext(new Linkedlist(key, value));
+			hashArray[index].setNext(new Linkedlist(key, value));
+			System.out.println("While loop value " + hashArray[index].getKey());
 		}
 	}
 
