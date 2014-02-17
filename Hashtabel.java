@@ -11,6 +11,9 @@ public class Hashtabel {
 		String key = "hallo";
 		System.out.println(func.calcIndex(key));
 		test.put(key, "a");
+		test.put(key, "value1");
+		test.put(key, "value2");
+		/*
 		for(int i = 0; i < test.size(); i++) {
 			if(test.getHashtabel()[i] == null) {
 				System.out.println("Empty! In index " + i);
@@ -19,6 +22,9 @@ public class Hashtabel {
 			}
 		}
 		System.out.println("done");
+		*/
+		System.out.println(test.get(key));
+		System.out.println(test.get("aap"));
 	}
 	// Hashtabel actual array // liever linked-list gebruiken
 	Linkedlist[] hashArray;
@@ -45,39 +51,59 @@ public class Hashtabel {
 
 	// Maps the specified key to the specified value in the hashtable
 	public void put(String key, String value) {
-		System.out.println("Entering put function Hashtabel");
+		// System.out.println("Entering put function Hashtabel");
 		int index = function.calcIndex(key);// function(key);// .calcIndex(key);
-		System.out.println("Put at index " + index);
+		// System.out.println("Put at index " + index);
 		Linkedlist currentNode = hashArray[index];
 		// System.out.println("Before entering if loop " + hashArray[index].getKey());
 		if (currentNode == null) {
 			hashArray[index] = new Linkedlist(key, value);
-			System.out.println("If loop value " + hashArray[index].getKey());
+			// System.out.println("If loop value " + hashArray[index].getKey());
 		} else {
 			while(currentNode != null) {
 				currentNode = currentNode.getNext();
 			}
 			hashArray[index].setNext(new Linkedlist(key, value));
-			System.out.println("While loop value " + hashArray[index].getKey());
+			// System.out.println("While loop value " + hashArray[index].getKey());
 		}
 	}
 
 	// Returns the value to which the specified key is mapped, or null
 	// if the map contains no mapping for the key.
-	public String get(String key) {
+	public String get(String key) throws NullPointerException {
 		// System.out.println("Entering get function");
 		int index = function.calcIndex(key); //function(key); //.calcIndex(key);
-		Linkedlist currentNode = hashArray[index];
-		if (currentNode == null) {
+
+		try {
+			Linkedlist currentNode = hashArray[index];
+			do {
+				if(currentNode.getKey().equals(key)) {
+					return currentNode.getValue();
+				} else {
+					currentNode = currentNode.getNext();
+				}
+			}while(currentNode != null);
 			return null;
-		} else if (currentNode.getKey().equals(key)) {
-			return currentNode.getValue();
-		} else {
-			while(!currentNode.getKey().equals(key)) {
-				currentNode = currentNode.getNext();
+			/*
+			if (currentNode == null) {
+				return null;
+			} else if (currentNode.getKey().equals(key)) {
+				return currentNode.getValue();
+			} else {
+				while(!currentNode.getKey().equals(key)) {
+					currentNode = currentNode.getNext();
+				}
+				return currentNode.getValue();
 			}
-			return currentNode.getValue();
+			*/
+		} catch (NullPointerException ex) {
+			System.err.println("Caught UnsupportedOperationException: "
+                           +  ex.getMessage());
+			System.out.println("Index is " + index);
+			System.out.println("Key is " + key);
 		}
+
+
 		/*
 		if (currentNode.getKey().equals(key)) {
 			return currentNode.getValue();
@@ -90,6 +116,7 @@ public class Hashtabel {
 			return null;
 		}
 		*/
+		return "";
 	}
 
 	public int size() {

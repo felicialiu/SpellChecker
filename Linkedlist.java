@@ -42,7 +42,12 @@ public class Linkedlist
 	//Returns the value 
 	public String getValue()
 	{
-		return value;
+		if(value == null) {
+			System.out.println("No value has been found");
+			return null;
+		} else {
+			return value;
+		}
 	}
 
 	//Sets the value 
@@ -54,9 +59,8 @@ public class Linkedlist
 	//returns the key
 	public String getKey()
 	{
-		System.out.println("Entered getKey()");
 		if(key == null) {
-			System.out.println("No value has been found");
+			System.out.println("No key has been found");
 			return null;
 		} else {
 			return this.key;
