@@ -50,7 +50,7 @@ class SpellChecker {
                 while(st.hasMoreTokens()) {
                     String word = st.nextToken();
                     if (!contains_numbers(word) && table.get(word) == null) {
-                        System.out.printf("Not found: [%s]\n", word);
+                        //System.out.printf("Not found: [%s]\n", word);
                         typo++;
                     }
                     count++;
