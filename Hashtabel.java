@@ -54,54 +54,114 @@ public class Hashtabel {
 		// System.out.println("Entering put function Hashtabel");
 		int index = function.calcIndex(key);// function(key);// .calcIndex(key);
 		// System.out.println("Put at index " + index);
-		Linkedlist currentNode = hashArray[index];
+		
 		// System.out.println("Before entering if loop " + hashArray[index].getKey());
-		if (currentNode == null) {
+		if (hashArray[index] == null) {
 			hashArray[index] = new Linkedlist(key, value);
 			// System.out.println("If loop value " + hashArray[index].getKey());
 		} else {
-			while(currentNode != null) {
+			Linkedlist currentNode = hashArray[index];
+			while(currentNode.getKey() != key && currentNode.getNext() != null ) {
 				currentNode = currentNode.getNext();
 			}
-			hashArray[index].setNext(new Linkedlist(key, value));
+			if(currentNode.getKey() == key){
+				currentNode.setValue(value);
+			} else{
+				currentNode.setNext(new Linkedlist(key, value));
+			}
 			// System.out.println("While loop value " + hashArray[index].getKey());
 		}
 	}
 
 	// Returns the value to which the specified key is mapped, or null
 	// if the map contains no mapping for the key.
-	public String get(String key) throws NullPointerException {
+	public String get(String key) {//throws NullPointerException {
 		// System.out.println("Entering get function");
 		int index = function.calcIndex(key); //function(key); //.calcIndex(key);
+		//int corrIndex = index;
 
-		try {
-			Linkedlist currentNode = hashArray[index];
-			do {
-				if(currentNode.getKey().equals(key)) {
+		//try {
+			//Linkedlist currentNode = hashArray[index];
+			//do {
+				/*if(currentNode.getKey().equals(key)) {
 					return currentNode.getValue();
 				} else {
 					currentNode = currentNode.getNext();
 				}
 			}while(currentNode != null);
-			return null;
+			return null;*/
 			/*
 			if (currentNode == null) {
 				return null;
 			} else if (currentNode.getKey().equals(key)) {
 				return currentNode.getValue();
 			} else {
-				while(!currentNode.getKey().equals(key)) {
-					currentNode = currentNode.getNext();
+				while(currentNode != null ){
+					if (!currentNode.getKey().equals(key)) {
+						currentNode = currentNode.getNext();
+						corrIndex = function.calcIndex(key);
+					}else{
+						corrIndex = function.calcIndex(key);
+						return currentNode.getValue();
+					}
 				}
-				return currentNode.getValue();
+				/*if(currentNode == null){
+					return null; 
+				}*/
+
+            if (hashArray[index] == null)
+                  return null;
+            else {
+                  Linkedlist currentNode = hashArray[index];
+                  while (currentNode != null && !currentNode.getKey().equals(key))
+                        currentNode = currentNode.getNext();
+                  if (currentNode == null)
+                        return null;
+                  else
+                        return currentNode.getValue();
+            }
+      }
+	/*
+		} //else if(currentNode != null) {
+			//System.out.println("1e else if statement");
+			if(!currentNode.getKey().equals(key)){
+			System.out.println("2e if statement");
+				while(!currentNode.getKey().equals(key)) {
+					System.out.println("1e while statement");
+
+					System.out.println(currentNode.getKey());
+					System.out.println(key);
+					Linkedlist check = currentNode.getNext();
+					if(check != null){
+						//corrIndex = function.calcIndex(currentNode.getNext().getKey());
+						System.out.println(corrIndex);
+						currentNode = currentNode.getNext();
+					}else{
+						return null;
+					}
+					//if(currentNode == null){
+					//	return null;
+					//}
+					//corrIndex = function.calcIndex(currentNode.getkey);
+				}
+			//}
+
+			return hashArray[corrIndex].getValue();
+		} else {
+			return null;
+		}
+		//return null;
+					//return hashArray[corrIndex].getValue();
+				
+				//}
 			}
-			*/
-		} catch (NullPointerException ex) {
+			
+		/*} catch (NullPointerException ex) {
 			System.err.println("Caught UnsupportedOperationException: "
                            +  ex.getMessage());
 			System.out.println("Index is " + index);
 			System.out.println("Key is " + key);
-		}
+		}*/
 
 
 		/*
@@ -116,8 +176,8 @@ public class Hashtabel {
 			return null;
 		}
 		*/
-		return "";
-	}
+		//return "";
+	//}
 
 	public int size() {
 		return hashArray.length;
