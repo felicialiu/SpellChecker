@@ -56,7 +56,7 @@ public class Linkedlist
 		this.value = value;
 	}
 
-	//returns the key
+	// Returns the key
 	public String getKey()
 	{
 		if(key == null) {
@@ -67,18 +67,18 @@ public class Linkedlist
 		}
 	}
 
-	//returns the next element
+	// Returns the next element
 	public Linkedlist getNext()
 	{
 		if(next == null){
 			//System.out.println("No next is present");
 			return null;
-		}else{
+		} else {
 			return next;
 		}
 	}
 
-	//sets the next value
+	// Sets the next value
 	public void setNext(Linkedlist next)
 	{
 		this.next = next;
