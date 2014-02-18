@@ -19,7 +19,8 @@ public class HashtabelOpen {
 	// Constructor that creates the Hashtabel object
 	public HashtabelOpen(int size, Compressable hashfunc) {
 		hash_size = size;
-		hashArray = new String[2][hash_size];
+		System.out.println("constructor yeah: "+hash_size);
+		hashArray = new String[hash_size][2];
 		function = hashfunc;
 	}
 
@@ -33,14 +34,14 @@ public class HashtabelOpen {
 		int index = function.calcIndex(key);
 
 		if(hashArray[index] == null){
-			hashArray[0][index] = key;
-			hashArray[1][index] = value;
+			hashArray[index][0] = key;
+			hashArray[index][1] = value;
 		}else{
 			while(hashArray[index] != null){
 				index++;
 			}
-			hashArray[0][index] = key;
-			hashArray[1][index] = value;
+			hashArray[index][0] = key;
+			hashArray[index][1] = value;
 		}
 		
 	}
@@ -53,11 +54,11 @@ public class HashtabelOpen {
         if(hashArray[index] == null){
         	return null;
         }else{
-        	while(hashArray[index] != null&& !hashArray[0][index].equals(key)){
+        	while(hashArray[index] != null&& !hashArray[index][0].equals(key)){
         		index++;
         	}
-        	if(hashArray[0][index].equals(key)){
-        		return hashArray[1][index];
+        	if(hashArray[index][0].equals(key)){
+        		return hashArray[index][1];
         	}else{
         		return null;
         	}
@@ -77,7 +78,7 @@ public class HashtabelOpen {
 
 	public void resize(){
 			System.out.println("Resize that shit!");
-			String[][] hashArrayTemp = new String[2][hashArray.length*2];
+			String[][] hashArrayTemp = new String[hashArray.length*2][2];
 			for (int i = 0; i < hashArray.length; i++) {
 				if(hashArray[i] != null){
 					hashArrayTemp[i] = hashArray[i];
