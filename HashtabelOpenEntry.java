@@ -1,3 +1,10 @@
+/*
+ * Assignment 2 - Datastructuren
+ * Names: Felicia Liu & Jonas van Oenen
+ * Student numbers: 6385842 & 10670947
+ * Date: 18 February 2014
+ */
+
 import java.util.*;
 import java.io.*;
 /*
@@ -16,8 +23,10 @@ public class HashtabelOpenEntry {
 	// Initial size of the hash table
 	private int hash_size;
 
+	// Declaration of the compression function
 	private Compressable function;
 
+	// Counter to keep track of the number of entries in the hash table
 	private int size = 0;
 
 	// Constructor that creates the HashtabelOpenEntry object
@@ -51,9 +60,12 @@ public class HashtabelOpenEntry {
 			resize();
 		}
 
+		// If slot is free, fills slot with (key, value)
 		if(hashArray[index] == null){
 			hashArray[index] = new HashEntry(key, value);
 			size++;
+
+		// If slot is occupied, find nextmost free slot using linear probing
 		} else {
 			while(hashArray[index] != null && hashArray[index].getKey() != key) {
 				index = (index + 1) % hash_size;
@@ -71,20 +83,23 @@ public class HashtabelOpenEntry {
         
         if(hashArray[index] == null){
         	return null;
-        }else{
-        	while(hashArray[index] != null && !hashArray[index].getKey().equals(key)){
+        } else {
+        	while(hashArray[index] != null &&
+        		 !hashArray[index].getKey().equals(key)){
         		index = (index + 1) % hash_size;
         	}
-        	if(hashArray[index] != null && hashArray[index].getKey().equals(key)){
+        	if(hashArray[index] != null && 
+        	   hashArray[index].getKey().equals(key)){
         		return hashArray[index].getKey();
-        	}else{
+        	} else {
         		return null;
         	}
         }
     }
 
+    // Resizes the hash table by creating a new object twice its original size
+    // place old values in resized hash table with new hash function
 	public void resize(){
-		System.out.println("Resize that shit!");
 		hash_size = hash_size*2;
 		function = new Division(hash_size);
 		HashtabelOpenEntry hashArrayTemp = new HashtabelOpenEntry(hash_size, function);
@@ -98,6 +113,8 @@ public class HashtabelOpenEntry {
 		System.out.println(" at load factor " + (double)size/hash_size);
 	}
 
+	// Returns number of nonempty elements in hash table, for use in 
+	// spellchecker class
 	public int size() {
 		return size;
 	}
