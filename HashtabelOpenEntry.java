@@ -1,18 +1,24 @@
 import java.util.*;
 import java.io.*;
-
+/*
+ * This class implements the datastructure of a hash table using linear probing
+ * a seperate class named HashEntry is used in the Array that represents the
+ * hash table.
+ */
 public class HashtabelOpenEntry {
 	// The actual Hashtabel is an Array of HashEntry objects
 	HashEntry[] hashArray;
 
 	// Load factor of the hash table, automatically on 0.75 since it's a
 	// good load_factor
-	private float load_factor;
+	private double load_factor = 0.75;
 
 	// Initial size of the hash table
 	private int hash_size;
 
 	private Compressable function;
+
+	private int size = 0;
 
 	// Constructor that creates the HashtabelOpenEntry object
 	public HashtabelOpenEntry(int size, Compressable hashfunc) {
@@ -21,35 +27,39 @@ public class HashtabelOpenEntry {
 		function = hashfunc;
 	}
 
+	// Constructor that allows setting the load factor
+	public HashtabelOpenEntry(int size, Compressable hashfunc, double factor) {
+		hash_size = size;
+		hashArray = new HashEntry[hash_size];
+		function = hashfunc;
+		load_factor = factor;
+	}
+
 	// Returns the hashArray
 	public HashEntry[] getHashtabel() {
 		return hashArray;
 	}
 
-	// Maps the specified key to the specified value in the hashtable
+	// Maps the specified key to the specified value in the hash table
 	public void put(String key, String value) {
 		int index = function.calcIndex(key);
-		
-		if(calculateLoadFactor() > 0.75) {
-			System.out.println("yo resize 1");
+
+		// Resizes the hash table if load factor exceeds maximum
+		if(((double) size/hash_size) > load_factor) {
+			System.out.print("Resizing the hash table at load factor ");
+			System.out.println((double) size/hash_size);
 			resize();
 		}
 
 		if(hashArray[index] == null){
 			hashArray[index] = new HashEntry(key, value);
+			size++;
 		} else {
-			if(calculateLoadFactor() > 0.75) {
-				System.out.println("yo resize 2");
-				resize();
-			}
 			while(hashArray[index] != null && hashArray[index].getKey() != key) {
-				if(calculateLoadFactor() > 0.75) {
-					System.out.println("yo resize 3");
-					resize();
-				}
 				index = (index + 1) % hash_size;
 			}
 			hashArray[index] = new HashEntry(key, value);
+			size++;
 		}
 		
 	}
@@ -73,31 +83,22 @@ public class HashtabelOpenEntry {
         }
     }
 
-    // Returns the number of filled hashArray elements
-	public int size() {
-		int counter = 0;
-		for(int i = 0; i < hashArray.length; i++) {
-			if(hashArray[i] != null) {
-				counter++;
-			}
-		}
-		return counter;
-	}
-
-	public float calculateLoadFactor() {
-		return size()/hash_size;
-	} 
-
 	public void resize(){
 		System.out.println("Resize that shit!");
 		hash_size = hash_size*2;
-		HashEntry[] hashArrayTemp = new HashEntry[hash_size];
-		for (int i = 0; i < hashArray.length; i++) {
+		function = new Division(hash_size);
+		HashtabelOpenEntry hashArrayTemp = new HashtabelOpenEntry(hash_size, function);
+		for (int i = 0; i < hash_size/2; i++) {
 			if(hashArray[i] != null){
-				hashArrayTemp[i] = hashArray[i];
+				hashArrayTemp.put(hashArray[i].getKey(), hashArray[i].getValue());
 			}
 		}
-		hashArray = hashArrayTemp;
-		function = new Division(hash_size);
+		hashArray = hashArrayTemp.getHashtabel();
+		System.out.print("Resized at hash size of " + hash_size);
+		System.out.println(" at load factor " + (double)size/hash_size);
+	}
+
+	public int size() {
+		return size;
 	}
 }
