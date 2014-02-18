@@ -70,7 +70,12 @@ public class Linkedlist
 	//returns the next element
 	public Linkedlist getNext()
 	{
-		return next;
+		if(next == null){
+			//System.out.println("No next is present");
+			return null;
+		}else{
+			return next;
+		}
 	}
 
 	//sets the next value

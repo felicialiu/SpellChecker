@@ -80,13 +80,15 @@ public class Hashtabel {
             if (hashArray[index] == null)
                   return null;
             else {
-                  Linkedlist currentNode = hashArray[index];
-                  while (currentNode != null && !currentNode.getKey().equals(key))
+                	Linkedlist currentNode = hashArray[index];
+                	while (currentNode != null && !currentNode.getKey().equals(key)){
                         currentNode = currentNode.getNext();
-                  if (currentNode == null)
+                	}
+                  	if (currentNode == null){
                         return null;
-                  else
+                	}else{
                         return currentNode.getValue();
+                    }
             }
       }
 
@@ -100,5 +102,14 @@ public class Hashtabel {
 		}
 		return counter;
 		// return hashArray.length;
+	}
+
+	public void resize(){
+			System.out.println("Resize that shit!");
+			Linkedlist[] hashArrayTemp = new Linkedlist[hashArray.length*2];
+			for (int i = 0; i < hashArray.length; i++) {
+				hashArrayTemp[i] = hashArray[i];
+			}
+			hashArray = hashArrayTemp;
 	}
 }
