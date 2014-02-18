@@ -1,25 +1,22 @@
 import java.util.*;
 import java.io.*;
 
-// import java.long.*;
-
-public class HashtabelOpen {
-	// The actual Hashtabel is an Array of Strings
+public class HashtabelOpenEntry {
+	// The actual Hashtabel is an Array of HashEntry objects
 	HashEntry[] hashArray;
 
 	// Load factor of the hash table, automatically on 0.75 since it's a
 	// good load_factor
-	private double load_factor = 0.75;
+	private float load_factor;
 
 	// Initial size of the hash table
 	private int hash_size;
 
 	private Compressable function;
 
-	// Constructor that creates the Hashtabel object
-	public HashtabelOpen(int size, Compressable hashfunc) {
+	// Constructor that creates the HashtabelOpenEntry object
+	public HashtabelOpenEntry(int size, Compressable hashfunc) {
 		hash_size = size;
-		System.out.println("constructor yeah: "+hash_size);
 		hashArray = new HashEntry[hash_size];
 		function = hashfunc;
 	}
@@ -32,23 +29,26 @@ public class HashtabelOpen {
 	// Maps the specified key to the specified value in the hashtable
 	public void put(String key, String value) {
 		int index = function.calcIndex(key);
+		
+		if(calculateLoadFactor() > 0.75) {
+			System.out.println("yo resize 1");
+			resize();
+		}
 
 		if(hashArray[index] == null){
 			hashArray[index] = new HashEntry(key, value);
-			/*
-			hashArray[index][0] = key;
-			hashArray[index][1] = value;
-			*/
 		} else {
-			while(hashArray[index] != null && hashArray[index].getKey() != key) {
-				index = (index + 1) % hash_size;
-				//System.out.println("Yo loop?");
-				// index++;
+			if(calculateLoadFactor() > 0.75) {
+				System.out.println("yo resize 2");
+				resize();
 			}
-			/*
-			hashArray[index][0] = key;
-			hashArray[index][1] = value;
-			*/
+			while(hashArray[index] != null && hashArray[index].getKey() != key) {
+				if(calculateLoadFactor() > 0.75) {
+					System.out.println("yo resize 3");
+					resize();
+				}
+				index = (index + 1) % hash_size;
+			}
 			hashArray[index] = new HashEntry(key, value);
 		}
 		
@@ -62,10 +62,10 @@ public class HashtabelOpen {
         if(hashArray[index] == null){
         	return null;
         }else{
-        	while(hashArray[index] != null && hashArray[index].getKey() != key){
+        	while(hashArray[index] != null && !hashArray[index].getKey().equals(key)){
         		index = (index + 1) % hash_size;
         	}
-        	if(hashArray[index].getKey().equals(key)){
+        	if(hashArray[index] != null && hashArray[index].getKey().equals(key)){
         		return hashArray[index].getKey();
         	}else{
         		return null;
@@ -84,14 +84,20 @@ public class HashtabelOpen {
 		return counter;
 	}
 
+	public float calculateLoadFactor() {
+		return size()/hash_size;
+	} 
+
 	public void resize(){
-			System.out.println("Resize that shit!");
-			HashEntry[] hashArrayTemp = new HashEntry[hashArray.length*2];
-			for (int i = 0; i < hashArray.length; i++) {
-				if(hashArray[i] != null){
-					hashArrayTemp[i] = hashArray[i];
-				}
+		System.out.println("Resize that shit!");
+		hash_size = hash_size*2;
+		HashEntry[] hashArrayTemp = new HashEntry[hash_size];
+		for (int i = 0; i < hashArray.length; i++) {
+			if(hashArray[i] != null){
+				hashArrayTemp[i] = hashArray[i];
 			}
-			hashArray = hashArrayTemp;
+		}
+		hashArray = hashArrayTemp;
+		function = new Division(hash_size);
 	}
 }
