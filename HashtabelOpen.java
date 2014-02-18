@@ -11,6 +11,10 @@ public class HashtabelOpen {
 	// good load_factor
 	private double load_factor = 0.75;
 
+	//private Compressable compressor;
+
+	private int counter = 0;
+
 	// Initial size of the hash table
 	private int hash_size;
 
@@ -31,7 +35,13 @@ public class HashtabelOpen {
 	// Maps the specified key to the specified value in the hashtable
 	public void put(String key, String value) {
 		int index = function.calcIndex(key);
-		//System.out.println(index);
+
+		//System.out.println(counter);
+		//System.out.println(counter/hash_size );
+		//System.out.println((double)counter/hash_size);
+		if((double)counter/(double)hash_size >= (double)load_factor){
+			resize();
+		}
 
 		if(hashArray[index] == null){
 			hashArray[index][0] = key;
@@ -39,11 +49,11 @@ public class HashtabelOpen {
 		}else{
 			while(hashArray[index][0] != null){
 				index++;
-				//System.out.println(index);
 			}
 			hashArray[index][0] = key;
 			hashArray[index][1] = value;
 		}
+		counter++;
 		
 	}
 
@@ -74,7 +84,7 @@ public class HashtabelOpen {
 	public int size() {
 		int counter = 0;
 		for(int i = 0; i < hashArray.length; i++) {
-			if(hashArray[i] != null) {
+			if(hashArray[i][0] != null) {
 				counter++;
 			}
 		}
@@ -82,13 +92,21 @@ public class HashtabelOpen {
 	}
 
 	public void resize(){
+			hash_size = hash_size*2;
+			function = new Division(hash_size); 
+			HashtabelOpen temp = new HashtabelOpen(hash_size,function);
 			System.out.println("Resize that shit!");
 			String[][] hashArrayTemp = new String[hashArray.length*2][2];
 			for (int i = 0; i < hashArray.length; i++) {
 				if(hashArray[i] != null){
-					hashArrayTemp[i] = hashArray[i];
+					String key = hashArray[i][0];
+					String value = hashArray[i][1];
+					temp.put(key, value);
 				}
 			}
-			hashArray = hashArrayTemp;
+			hashArray = temp.getHashtabel();
+			//hashArray = hashArrayTemp;
+			//hash_size = hashArray.length;
+			System.out.println("einde resize!");
 	}
 }
