@@ -3,6 +3,7 @@ import java.io.*;
 class SpellChecker {
     public static void main(String[] args) {
         int hash_size;
+        int words = 0;
         int count = 0, typo = 0;
         long start = 0, end = 0;
         String wordfile, textfile;
@@ -30,6 +31,7 @@ class SpellChecker {
             while ((str = in.readLine()) != null) {
                 copy = str.toLowerCase();
                 table.put(copy, placeholder);
+                words++;
             }
             end = System.currentTimeMillis();
             in.close();
@@ -62,7 +64,8 @@ class SpellChecker {
             e.printStackTrace();
         }
 
-        System.out.printf("Hash table contains %d words\n", table.size());
+        System.out.printf("Hash table contains %d entries\n", table.size());
+        System.out.printf("Hash table contains %d words\n", words);
         System.out.printf("Hash table load factor %f\n",
                (double)table.size()/hash_size);
 
