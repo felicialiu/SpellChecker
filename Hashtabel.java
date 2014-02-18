@@ -1,6 +1,17 @@
+/*
+ * Assignment 2 - Datastructuren
+ * Names: Felicia Liu & Jonas van Oenen
+ * Student numbers: 6385842 & 10670947
+ * Date: 18 February 2014
+ */
+
 import java.util.*;
 import java.io.*;
-
+/*
+ * This class implements the datastructure of a hash table using collision
+ * chaining. A seperate class named Linkedlist is used in the Array that 
+ * represents the hash table and enables the chaining functionality.
+ */
 public class Hashtabel {
 	// The actual Hashtabel is an Array of Linkedlists
 	Linkedlist[] hashArray;
