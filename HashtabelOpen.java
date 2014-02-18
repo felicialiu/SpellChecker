@@ -19,7 +19,6 @@ public class HashtabelOpen {
 	// Constructor that creates the Hashtabel object
 	public HashtabelOpen(int size, Compressable hashfunc) {
 		hash_size = size;
-		System.out.println("constructor yeah: "+hash_size);
 		hashArray = new String[hash_size][2];
 		function = hashfunc;
 	}
@@ -32,13 +31,15 @@ public class HashtabelOpen {
 	// Maps the specified key to the specified value in the hashtable
 	public void put(String key, String value) {
 		int index = function.calcIndex(key);
+		//System.out.println(index);
 
 		if(hashArray[index] == null){
 			hashArray[index][0] = key;
 			hashArray[index][1] = value;
 		}else{
-			while(hashArray[index] != null){
+			while(hashArray[index][0] != null){
 				index++;
+				//System.out.println(index);
 			}
 			hashArray[index][0] = key;
 			hashArray[index][1] = value;
@@ -49,15 +50,19 @@ public class HashtabelOpen {
 	// Returns the value to which the specified key is mapped, or null
 	// if the map contains no mapping for the key.
 	public String get(String key) {
-		int index = function.calcIndex(key); 
+		int index = function.calcIndex(key);
+		//System.out.println(index);
         
         if(hashArray[index] == null){
         	return null;
         }else{
-        	while(hashArray[index] != null&& !hashArray[index][0].equals(key)){
+        	while(hashArray[index][0] != null&& !hashArray[index][0].equals(key)){
+        		if(index >= hashArray.length){
+        			return null;
+        		}
         		index++;
         	}
-        	if(hashArray[index][0].equals(key)){
+        	if(hashArray[index][0] != null && hashArray[index][0].equals(key)){
         		return hashArray[index][1];
         	}else{
         		return null;
