@@ -90,7 +90,7 @@ public class HashtabelOpen {
 		return counter;
 	}
 
-	public void resize() throws NullPointerException {
+	public void resize() { // throws NullPointerException {
 		String key = "";
 		String value = "";
 		hash_size = hash_size*2;
@@ -101,16 +101,17 @@ public class HashtabelOpen {
 		
 		for (int i = 0; i < hash_size/2; i++) {
 			if(hashArray[i] != null){
-				try {
+				// try {
 				key = hashArray[i][0];
 				value = hashArray[i][1];
 				
 					temp.put(key, value);
-				} catch (NullPointerException ex) {
+				/*} catch (NullPointerException ex) {
 					System.out.println("Index is " + i);
 					System.out.println("Key is " + key);
 					System.err.println("NullPointerException: " + ex.getMessage());
 				}
+				*/
 			}
 		}
 
