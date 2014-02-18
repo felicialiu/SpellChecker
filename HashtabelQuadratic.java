@@ -93,8 +93,8 @@ public class HashtabelQuadratic {
         } else {
         	while(hashArray[index] != null &&
         		 !hashArray[index].getKey().equals(key)){
-        		index = i*i % hash_size;
-        		i++;
+        		index = (index + i*i) % hash_size;
+				i++;
         	}
         	if(hashArray[index] != null && 
         	   hashArray[index].getKey().equals(key)){
