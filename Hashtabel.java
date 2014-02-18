@@ -1,42 +1,17 @@
 import java.util.*;
 import java.io.*;
 
-// import java.long.*;
-
 public class Hashtabel {
-	public static void main(String[] args) {
-		Compressable func = new Division(100);
-		Hashtabel test = new Hashtabel(100, func);
-		System.out.println(test.size());
-		String key = "hallo";
-		System.out.println(func.calcIndex(key));
-		test.put(key, "a");
-		test.put(key, "value1");
-		test.put(key, "value2");
-		/*
-		for(int i = 0; i < test.size(); i++) {
-			if(test.getHashtabel()[i] == null) {
-				System.out.println("Empty! In index " + i);
-			} else {
-				System.out.print("Index " + i + " contains key " + test.getHashtabel()[i].getKey());
-			}
-		}
-		System.out.println("done");
-		*/
-		System.out.println(test.get(key));
-		System.out.println(test.get("aap"));
-	}
-
 	// The actual Hashtabel is an Array of Linkedlists
 	Linkedlist[] hashArray;
 
-	// Load factor of the hash table, automatically on 0.75 since it's a
-	// good load_factor
+	// Load factor of the hash table, automatically on 0.75 
 	private double load_factor = 0.75;
 
 	// Initial size of the hash table
 	private int hash_size;
 
+	//dunction is a compressable interface variable
 	private Compressable function;
 
 	// Constructor that creates the Hashtabel object
@@ -46,7 +21,7 @@ public class Hashtabel {
 		function = hashfunc;
 	}
 
-	// Returns the hashArray
+	// Returns the hashtable
 	public Linkedlist[] getHashtabel() {
 		return hashArray;
 	}
@@ -101,15 +76,5 @@ public class Hashtabel {
 			}
 		}
 		return counter;
-		// return hashArray.length;
-	}
-
-	public void resize(){
-			System.out.println("Resize that shit!");
-			Linkedlist[] hashArrayTemp = new Linkedlist[hashArray.length*2];
-			for (int i = 0; i < hashArray.length; i++) {
-				hashArrayTemp[i] = hashArray[i];
-			}
-			hashArray = hashArrayTemp;
 	}
 }

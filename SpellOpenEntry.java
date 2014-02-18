@@ -1,15 +1,15 @@
 import java.util.*;
 import java.io.*;
 
-/*Spellchain implements the linked list hashtable*/
-class SpellChain {
+/*SpellOpenEntry implements our open addressing hash table containing an array of hashentry objects*/
+class SpellOpenEntry {
     public static void main(String[] args) {
         int hash_size;
         int words = 0;
         int count = 0, typo = 0;
         long start = 0, end = 0;
         String wordfile, textfile;
-        Hashtabel table;
+        HashtabelOpenEntry table; // Hashtable<String, String> table;
 
         /* Shared token to store for every word in the hash table. */
         String placeholder = "a";
@@ -23,7 +23,7 @@ class SpellChain {
         hash_size = Integer.parseInt(args[2]);
         Compressable function = new Division(hash_size);
         System.out.printf("Selected table size: %d\n", hash_size);
-        table = new Hashtabel(hash_size, function); // table = new Hashtable<String, String>(hash_size);
+        table = new HashtabelOpenEntry(hash_size, function); // table = new Hashtable<String, String>(hash_size);
        
         /* Read wordfile, and insert every word into the hash table. */
         try {
@@ -68,7 +68,8 @@ class SpellChain {
 
         System.out.printf("Hash table contains %d entries\n", table.size());
         System.out.printf("Hash table contains %d words\n", words);
-        System.out.printf("Hash table load factor %f\n", (double)table.size()/hash_size);
+        System.out.printf("Hash table load factor %f\n",
+               (double)table.size()/hash_size);
 
         System.out.printf("Text contains %d words\n", count);
         System.out.printf("typo's %d\n", typo);

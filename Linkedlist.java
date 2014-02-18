@@ -3,25 +3,6 @@ import java.lang.*;
 
 public class Linkedlist
 {
-	public static void main(String[] args) {
-		/*
-		Linkedlist test1 = new Linkedlist("Word", "a");
-		Linkedlist test2 = new Linkedlist("Woord", "a");
-		Linkedlist test3 = new Linkedlist("Node", "a");
-		test1.setNext(test2);
-		test2.setNext(test3);
-		System.out.println("Printing the key of test 1!");
-		System.out.println(test1.getKey());
-		System.out.println("Printing the next value of test 1!");
-		System.out.println(test1.getNext().getKey());
-		*/
-		/*
-		Linkedlist[] testarray = new Linkedlist[5];
-		for(int i = 0; i < testarray.length; i++) {
-			System.out.println(testarray[i]);
-		}
-		*/
-	}
 	// Linked list that will function as entry for hashtable
 	private Linkedlist next = null;
 
@@ -71,7 +52,6 @@ public class Linkedlist
 	public Linkedlist getNext()
 	{
 		if(next == null){
-			//System.out.println("No next is present");
 			return null;
 		} else {
 			return next;
