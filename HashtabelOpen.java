@@ -11,9 +11,7 @@ public class HashtabelOpen {
 	// good load_factor
 	private double load_factor = 0.75;
 
-	//private Compressable compressor;
-
-	private int counter = 0;
+	private int size = 0;
 
 	// Initial size of the hash table
 	private int hash_size;
@@ -39,7 +37,7 @@ public class HashtabelOpen {
 		//System.out.println(counter);
 		//System.out.println(counter/hash_size );
 		//System.out.println((double)counter/hash_size);
-		if((double)counter/(double)hash_size >= (double)load_factor){
+		if(((double)size/hash_size) > load_factor){
 			resize();
 		}
 
@@ -48,12 +46,13 @@ public class HashtabelOpen {
 			hashArray[index][1] = value;
 		}else{
 			while(hashArray[index][0] != null){
-				index++;
+				index = (index + 1) % hash_size;
+				// index++;
 			}
 			hashArray[index][0] = key;
 			hashArray[index][1] = value;
 		}
-		counter++;
+		size++;
 		
 	}
 
@@ -91,22 +90,33 @@ public class HashtabelOpen {
 		return counter;
 	}
 
-	public void resize(){
-			hash_size = hash_size*2;
-			function = new Division(hash_size); 
-			HashtabelOpen temp = new HashtabelOpen(hash_size,function);
-			System.out.println("Resize that shit!");
-			String[][] hashArrayTemp = new String[hashArray.length*2][2];
-			for (int i = 0; i < hashArray.length; i++) {
-				if(hashArray[i] != null){
-					String key = hashArray[i][0];
-					String value = hashArray[i][1];
+	public void resize() throws NullPointerException {
+		String key = "";
+		String value = "";
+		hash_size = hash_size*2;
+		function = new Division(hash_size); 
+		HashtabelOpen temp = new HashtabelOpen(hash_size, function);
+		System.out.println("Resize that shit!");
+		// String[][] hashArrayTemp = new String[hashArray.length*2][2];
+		
+		for (int i = 0; i < hash_size/2; i++) {
+			if(hashArray[i] != null){
+				try {
+				key = hashArray[i][0];
+				value = hashArray[i][1];
+				
 					temp.put(key, value);
+				} catch (NullPointerException ex) {
+					System.out.println("Index is " + i);
+					System.out.println("Key is " + key);
+					System.err.println("NullPointerException: " + ex.getMessage());
 				}
 			}
-			hashArray = temp.getHashtabel();
-			//hashArray = hashArrayTemp;
-			//hash_size = hashArray.length;
-			System.out.println("einde resize!");
+		}
+
+		hashArray = temp.getHashtabel();
+		//hashArray = hashArrayTemp;
+		//hash_size = hashArray.length;
+		System.out.println("einde resize!");
 	}
 }
