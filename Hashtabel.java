@@ -75,22 +75,22 @@ public class Hashtabel {
 
 	// Returns the value to which the specified key is mapped, or null
 	// if the map contains no mapping for the key.
-	public String get(String key) {//throws NullPointerException {
+	public String get(String key) {
 		int index = function.calcIndex(key); 
-            if (hashArray[index] == null)
-                  return null;
-            else {
-                	Linkedlist currentNode = hashArray[index];
-                	while (currentNode != null && !currentNode.getKey().equals(key)){
-                        currentNode = currentNode.getNext();
-                	}
-                  	if (currentNode == null){
-                        return null;
-                	}else{
-                        return currentNode.getValue();
-                    }
+        if (hashArray[index] == null) {
+              return null;
+        } else {
+        	Linkedlist currentNode = hashArray[index];
+        	while (currentNode != null && !currentNode.getKey().equals(key)) {
+                currentNode = currentNode.getNext();
+        	}
+          	if (currentNode == null){
+                return null;
+        	} else {
+                return currentNode.getValue();
             }
-      }
+    	}
+    }
 
     // Returns the number of filled hashArray elements
 	public int size() {
